@@ -1,0 +1,73 @@
+{
+    "version": 1,
+    "author": "Anonymous maker",
+    "editor": "wokwi",
+    "parts": [
+      {
+        "type": "board-pi-pico-w",
+        "id": "pico",
+        "top": -3.25,
+        "left": 80.35,
+        "attrs": { "builder": "pico-sdk" }
+      },
+      {
+        "type": "wokwi-led",
+        "id": "led1",
+        "top": -13.2,
+        "left": -178.6,
+        "attrs": { "color": "green" }
+      },
+      { "type": "wokwi-led", "id": "led2", "top": 44.4, "left": -169, "attrs": { "color": "blue" } },
+      {
+        "type": "wokwi-led",
+        "id": "led3",
+        "top": 111.6,
+        "left": -159.4,
+        "attrs": { "color": "red" }
+      },
+      {
+        "type": "wokwi-pushbutton",
+        "id": "btn1",
+        "top": 35,
+        "left": -28.8,
+        "attrs": { "color": "green" }
+      },
+      {
+        "type": "wokwi-resistor",
+        "id": "r1",
+        "top": 205.55,
+        "left": -124.8,
+        "attrs": { "value": "330" }
+      },
+      {
+        "type": "wokwi-resistor",
+        "id": "r2",
+        "top": 224.75,
+        "left": -124.8,
+        "attrs": { "value": "330" }
+      },
+      {
+        "type": "wokwi-resistor",
+        "id": "r3",
+        "top": 243.95,
+        "left": -124.8,
+        "attrs": { "value": "330" }
+      }
+    ],
+    "connections": [
+      [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+      [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+      [ "pico:GND.4", "r1:2", "black", [ "h0" ] ],
+      [ "r1:2", "r2:2", "black", [ "v0" ] ],
+      [ "r3:2", "r2:2", "black", [ "v0" ] ],
+      [ "led1:C", "r3:1", "green", [ "v0" ] ],
+      [ "led2:C", "r2:1", "green", [ "v0" ] ],
+      [ "led3:C", "r1:1", "green", [ "v0" ] ],
+      [ "led3:A", "pico:GP13", "green", [ "v0" ] ],
+      [ "led2:A", "pico:GP12", "green", [ "h28.8", "v70.41" ] ],
+      [ "led1:A", "pico:GP11", "green", [ "h48", "v118.45" ] ],
+      [ "btn1:2.r", "pico:GP5", "green", [ "h0" ] ],
+      [ "btn1:1.r", "pico:GND.1", "green", [ "v0" ] ]
+    ],
+    "dependencies": {}
+  }
