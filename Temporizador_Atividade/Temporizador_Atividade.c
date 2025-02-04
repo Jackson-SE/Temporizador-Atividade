@@ -1,22 +1,19 @@
-/*Atividade realizada em atendimento à proposta de Tarefa em 29/01/2025
+/*Atividade 2 realizada em atendimento à proposta de Tarefa em 29/01/2025
                        Semáforo
 Residente: Jackson da Silva Carneiro
 */
 #include <stdio.h>
 #include "pico/time.h"
 #include "pico/stdlib.h"
-//#include "hardware/clocks.h"
-#//include "hardware/timer.h"
+
 
 #define LED_PIN_RED 13      // led vermelho
 #define LED_PIN_BLUE 12     //led azul
 #define LED_PIN_GREEN 11  //led verde
 #define BUTTON_A 5       //Push Button A
 absolute_time_t turn_off_time; // tempo para desligar o led
-bool led_ativo = false;
-// Variáveis para controlar o estado dos LEDs e o tempo
-volatile int led_state = 0; // 0: vermelho, 1: amarelo, 2: verde
-volatile uint32_t timer_start_time;
+bool led_ativo = false;   //indica estado do led, será usada no alarme.
+
 
 void configura_GPIO(){ //CONFIGURAÇÃO DOS PINOS GPIO
 
@@ -34,8 +31,8 @@ void configura_GPIO(){ //CONFIGURAÇÃO DOS PINOS GPIO
     gpio_pull_up(BUTTON_A);           //Habilita pull up interno
 }
 
-int64_t turn_off_callback(alarm_id_t id, void *user_data){
-    gpio_put(LED_PIN_RED, 0);
+int64_t turn_off_callback(alarm_id_t id, void *user_data){  // função do alarme, irá garantir que todos leds desliguem
+    gpio_put(LED_PIN_RED, 0);  
     gpio_put(LED_PIN_BLUE, 0);
     gpio_put(LED_PIN_GREEN, 0);
     led_ativo = false;
@@ -58,30 +55,23 @@ void liga_leds(){
             gpio_put(LED_PIN_BLUE, false);   //desliga led amarelo
             gpio_put(LED_PIN_GREEN, true); //liga led verde
             
-    
-   // return 0; // Indica que o timer deve continuar repetindo
-}
+}stdio_i
 
-int main()                    // usar turn_off_callback &  add_alarm_in_ms()
+int main()                    
 {
-    stdio_init_all();
-    configura_GPIO();
+    stdio_init_all(); //inicializa as bibliotecas padrão
+    configura_GPIO();//busca a função e configura os pinos GPIO's utilizados no código
 
-   // struct repeating_timer timer;
-    //timer_start_time = time_us_32(); // Inicializa o tempo de início
 
-    
     while (true) {
-       if(gpio_get(BUTTON_A) == 0 && !led_ativo){
-       sleep_ms(50);
-       if (gpio_get(BUTTON_A) == 0){
+       if(gpio_get(BUTTON_A) == 0 && !led_ativo){  //verifica se o botão foi pressionado e se os leds estão desligados
+       sleep_ms(50);  //debounce para garantir que o botão foi pressionado
+       if (gpio_get(BUTTON_A) == 0){   
         liga_leds();
-        led_ativo = true;
-        add_alarm_in_ms(3000, turn_off_callback, NULL, false);
+        led_ativo = true;  
+        add_alarm_in_ms(3000, turn_off_callback, NULL, false); //alarme adicionado só permitirá novo acionamento do botão após o tempo definido
        }
     }
     sleep_ms(10);
-    }
-        //sleep_ms(1000);  //intervalo de impressão da mensagem no loop
-    
+    }   
 }
