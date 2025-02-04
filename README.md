@@ -5,3 +5,7 @@ Atividade 2: Temporizador de um disparo (One Shot)  || TAREFA INDIVIDUAL
 
 
 # Residente: Jackson da Silva Carneiro
+
+# Link do vídeo de funcionamento:
+
+https://youtube.com/shorts/UJAn9Ts9B7s?feature=share
